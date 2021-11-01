@@ -1,23 +1,44 @@
 import logo from './logo.svg';
 import './App.css';
+import InputRange from 'react-input-range';
+import { useState } from 'react';
+import PasswordGenerator from './components/PasswordGenerator';
 
 function App() {
+
+  let [numChars, setNumChars] = useState(2);
+  let [charset, setCharset] = useState("alphanumeric");
+  let [isButtonClicked, setButtonClicked] = useState(false);
+
+  let getPassword = () => {
+    console.log(numChars);
+    console.log(charset);
+    setButtonClicked(true);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div>
+        <h2>Number of Characters</h2>
+        <h3>{numChars}</h3>
+        <input type="range" min={2} max={32} value={numChars} onChange={e => setNumChars(e.target.value)} step="1" />
+        <br />
+        <br />
+        <h2>Charset</h2>
+        <select value={charset} onChange={e => setCharset(e.target.value)}>
+          <option value="alphabetic">Alphabets</option>
+          <option value="numeric">Numeric</option>
+          <option value="alphanumeric">AlphaNumeric</option>
+          <option value="custom">All Characters</option>
+        </select>
+        <br />
+        <br />
+        {isButtonClicked? <button onClick={e => console.log("regenerate")}>Re-Generate Password</button>: <button onClick={getPassword}>Generate Password</button>}
+        
+      </div>
+      <div>
+        {isButtonClicked ? <PasswordGenerator length={numChars} charSet={charset} buttonClicked={isButtonClicked}/>: <div>Please enter the information above and click the button to generate a password</div>}
+      </div>
     </div>
   );
 }
