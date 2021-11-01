@@ -2,17 +2,21 @@ import logo from './logo.svg';
 import './App.css';
 import InputRange from 'react-input-range';
 import { useState } from 'react';
-import PasswordGenerator from './components/PasswordGenerator';
+import * as randomstring from 'randomstring';
+
 
 function App() {
 
   let [numChars, setNumChars] = useState(2);
   let [charset, setCharset] = useState("alphanumeric");
   let [isButtonClicked, setButtonClicked] = useState(false);
+  let [pwd, setPwd] = useState("");
 
   let getPassword = () => {
-    console.log(numChars);
-    console.log(charset);
+    setPwd(randomstring.generate({
+      length: length,
+      charset: charSet
+    }))
     setButtonClicked(true);
   }
 
@@ -33,11 +37,11 @@ function App() {
         </select>
         <br />
         <br />
-        {isButtonClicked? <button onClick={e => console.log("regenerate")}>Re-Generate Password</button>: <button onClick={getPassword}>Generate Password</button>}
-        
+        {isButtonClicked ? <button onClick={e => console.log("regenerate")}>Re-Generate Password</button> : <button onClick={getPassword}>Generate Password</button>}
+
       </div>
       <div>
-        {isButtonClicked ? <PasswordGenerator length={numChars} charSet={charset} buttonClicked={isButtonClicked}/>: <div>Please enter the information above and click the button to generate a password</div>}
+        {isButtonClicked ? <div>{pwd}</div> : <div>Please enter the information above and click the button to generate a password</div>}
       </div>
     </div>
   );
