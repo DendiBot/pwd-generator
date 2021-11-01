@@ -1,6 +1,4 @@
-import logo from './logo.svg';
 import './App.css';
-import InputRange from 'react-input-range';
 import { useState } from 'react';
 import * as randomstring from 'randomstring';
 
@@ -12,10 +10,14 @@ function App() {
   let [isButtonClicked, setButtonClicked] = useState(false);
   let [pwd, setPwd] = useState("");
 
+  // recreating the randomstring.generate function
+  let allChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789~!@#$%^&*()_-+={}[];:<>,.?/".split("");
+
   let getPassword = () => {
+    console.log(allChars);
     setPwd(randomstring.generate({
-      length: length,
-      charset: charSet
+      length: numChars,
+      charset: charset
     }))
     setButtonClicked(true);
   }
@@ -37,7 +39,7 @@ function App() {
         </select>
         <br />
         <br />
-        {isButtonClicked ? <button onClick={e => console.log("regenerate")}>Re-Generate Password</button> : <button onClick={getPassword}>Generate Password</button>}
+        {isButtonClicked ? <button onClick={getPassword}>Re-Generate Password</button> : <button onClick={getPassword}>Generate Password</button>}
 
       </div>
       <div>
