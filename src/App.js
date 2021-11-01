@@ -13,12 +13,52 @@ function App() {
   // recreating the randomstring.generate function
   let allChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789~!@#$%^&*()_-+={}[];:<>,.?/".split("");
 
+  let lowerCaseStart = 0;
+  let lowerCaseEnd = 25;
+  let upperCaseStart = 26;
+  let upperCaseEnd = 51;
+  let numStart = 52;
+  let numStop = 61;
+  let symStart = 62;
+  let symStop = 88;
+
   let getPassword = () => {
-    console.log(allChars);
-    setPwd(randomstring.generate({
-      length: numChars,
-      charset: charset
-    }))
+    if (charset === "alphabetic") {
+      let len = 0;
+      let pass = "";
+      while(len<numChars){
+        pass += allChars[Math.floor(Math.random()*(upperCaseEnd-lowerCaseStart)+lowerCaseStart)];
+        len++;
+      }
+      setPwd(pass);
+    }
+    else if (charset === "numeric") {
+      let len = 0;
+      let pass = "";
+      while(len<numChars){
+        pass += allChars[Math.floor(Math.random()*(numStop-numStart)+numStart)];
+        len++;
+      }
+      setPwd(pass);
+    }
+    else if (charset === "alphanumeric") {
+      let len = 0;
+      let pass = "";
+      while(len<numChars){
+        pass += allChars[Math.floor(Math.random()*(numStop-lowerCaseStart)+lowerCaseStart)];
+        len++;
+      }
+      setPwd(pass);
+    }
+    else if (charset === "custom") {
+      let len = 0;
+      let pass = "";
+      while(len<numChars){
+        pass += allChars[Math.floor(Math.random()*(symStop-lowerCaseStart)+lowerCaseStart)];
+        len++;
+      }
+      setPwd(pass);
+    }
     setButtonClicked(true);
   }
 
